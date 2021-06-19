@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyparser = require("body-parser");
 const request = require("request");
 const https = require("https");
 const app = express();
@@ -8,7 +7,7 @@ const app = express();
 // const mailchimp = new Mailchimp('venkat:78af00a99c1fa0a1c479d29469e81353-us6');
 
 app.use(express.static("public"));
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
 app.get("/", function(req,res){
     res.sendFile(__dirname+"/signup.html");
 })
@@ -27,14 +26,14 @@ app.post("/", function(req,res){
     //   })
     //   .then(res => console.log(res))
     //   .catch(err => console.log(err));
-    const data = 
+    const data =
     {
-        members: 
+        members:
         [
             {
                 email_address: emailid,
                 status: "subscribed",
-                merge_fields: 
+                merge_fields:
                 {
                     FNAME: fname,
                     LNAME: lname
@@ -43,10 +42,10 @@ app.post("/", function(req,res){
         ]
     };
     const jasondata=JSON.stringify(data);
-    const url ="https://us6.api.mailchimp.com/3.0/lists/870fd9260e/members"
+    const url ="https://us6.api.mailchimp.com/3.0/lists/870fd9260e/"
     const options ={
         method: "POST",
-        auth: "venkat:78af00a99c1fa0a1c479d29469e81353-us6"
+        auth: "venkat:78af00a99c1fa0a1c479d29469e81353-us6",
     }
     const request = https.request(url,options,function(response)
     {
